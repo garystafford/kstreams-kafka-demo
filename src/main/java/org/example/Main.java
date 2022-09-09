@@ -37,13 +37,8 @@ public class Main {
         props.put(StreamsConfig.COMMIT_INTERVAL_MS_CONFIG, 10); // Used to speed up publishing of messages for demo
 
         StreamsBuilder builder = new StreamsBuilder();
-        final KStream<Void, Purchase> purchases = builder.stream(
-                INPUT_TOPIC, Consumed.with(Serdes.Void(), CustomSerdes.Purchase()));
-
-        // debugging input to console
-        // purchases.foreach((key, value) -> System.out.println(key + ": " + value.toString()));
-
-        purchases
+        builder
+                .stream(INPUT_TOPIC, Consumed.with(Serdes.Void(), CustomSerdes.Purchase()))
                 .flatMap((KeyValueMapper<Void, Purchase, Iterable<KeyValue<String, Total>>>) (key, value) -> {
                     List<KeyValue<String, Total>> result = new ArrayList<>();
                     result.add(new KeyValue<>(value.getProductId(), new Total(
@@ -63,6 +58,9 @@ public class Main {
                 })
                 .toStream()
                 .to(OUTPUT_TOPIC, Produced.with(Serdes.String(), CustomSerdes.Total()));
+
+        // Debugging to console vs publishing to kafka - replace '.to' method above
+        // .foreach((key, value) -> System.out.println(key + ": " + value.toString()));
 
         //  Topology topology = builder.build();
         // System.out.printf("---> %s%n", topology.describe().toString());

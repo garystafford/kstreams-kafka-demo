@@ -109,9 +109,9 @@ kafka-console-consumer.sh \
 JAVA_HOME=/Users/garystafford/Library/Java/JavaVirtualMachines/corretto-17.0.3
 
 # compile to uber jar
-gradle clean shadowJar
+./gradlew clean shadowJar
 
-java -cp ../kstreams-kafka-demo/build/libs/kstreams-kafka-demo-1.0.0-all.jar org.example.Main
+java -cp build/libs/kstreams-kafka-demo-1.0.0-all.jar org.example.Main
 ```
 
 ## References
