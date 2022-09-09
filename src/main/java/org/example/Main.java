@@ -7,9 +7,11 @@ package org.example;
 // Date: 2022-09-07
 
 import org.apache.kafka.clients.consumer.ConsumerConfig;
-import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.common.serialization.Serdes;
-import org.apache.kafka.streams.*;
+import org.apache.kafka.streams.KafkaStreams;
+import org.apache.kafka.streams.KeyValue;
+import org.apache.kafka.streams.StreamsBuilder;
+import org.apache.kafka.streams.StreamsConfig;
 import org.apache.kafka.streams.kstream.*;
 import org.example.model.Purchase;
 import org.example.model.Total;
@@ -29,16 +31,17 @@ public class Main {
         System.out.println("Starting...");
 
         Properties props = new Properties();
-        props.put(StreamsConfig.APPLICATION_ID_CONFIG, "drink-totals-application" + LocalDateTime.now().hashCode()); // + LocalDateTime.now().hashCode());
+        props.put(StreamsConfig.APPLICATION_ID_CONFIG, "kstreams-demo-app"); // + LocalDateTime.now().hashCode());
         props.put(StreamsConfig.BOOTSTRAP_SERVERS_CONFIG, BOOTSTRAP_SERVERS);
         props.put(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, "earliest");
-        props.put(StreamsConfig.COMMIT_INTERVAL_MS_CONFIG, 10);
+        props.put(StreamsConfig.COMMIT_INTERVAL_MS_CONFIG, 10); // Used to speed up publishing of messages for demo
 
         StreamsBuilder builder = new StreamsBuilder();
         final KStream<Void, Purchase> purchases = builder.stream(
                 INPUT_TOPIC, Consumed.with(Serdes.Void(), CustomSerdes.Purchase()));
 
-//        purchases.foreach((key, value) -> System.out.println(key + ": " + value.toString()));
+        // debugging input to console
+        // purchases.foreach((key, value) -> System.out.println(key + ": " + value.toString()));
 
         purchases
                 .flatMap((KeyValueMapper<Void, Purchase, Iterable<KeyValue<String, Total>>>) (key, value) -> {
@@ -61,23 +64,8 @@ public class Main {
                 .toStream()
                 .to(OUTPUT_TOPIC, Produced.with(Serdes.String(), CustomSerdes.Total()));
 
-//        Topology topology = builder.build();
-//        System.out.printf("---> %s%n", topology.describe().toString());
-
-//        KStream<String, Total> runningTotals = totals
-//                .groupByKey()
-//                .aggregate(Total::new,
-//                        (String k, Total t1, Total t2) -> {
-//                            t2.setQuantity(t1.getQuantity() + t2.getQuantity());
-//                            t2.setTotalPurchases(t1.getTotalPurchases().add(t2.getTotalPurchases()));
-//                            return t2;
-//                        })
-//                .toStream();
-
-//        totals.foreach((key, value) -> System.out.println(key + ": " + value.toString()));
-
-//        totals.to(OUTPUT_TOPIC, Produced.with(Serdes.String(), CustomSerdes.Total()));
-
+        //  Topology topology = builder.build();
+        // System.out.printf("---> %s%n", topology.describe().toString());
 
         KafkaStreams streams = new KafkaStreams(builder.build(), props);
         streams.start();
