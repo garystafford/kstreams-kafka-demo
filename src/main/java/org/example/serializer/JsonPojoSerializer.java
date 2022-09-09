@@ -1,5 +1,8 @@
 package org.example.serializer;
 
+// Reference/Source: Arturo González V.
+// https://medium.com/@agvillamizar/implementing-custom-serdes-for-java-objects-using-json-serializer-and-deserializer-in-kafka-streams-d794b66e7c03
+
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import org.apache.kafka.common.errors.SerializationException;

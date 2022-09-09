@@ -1,12 +1,17 @@
 package org.example.serializer;
 
+// Reference/Source: Arturo González V.
+// https://medium.com/@agvillamizar/implementing-custom-serdes-for-java-objects-using-json-serializer-and-deserializer-in-kafka-streams-d794b66e7c03
+
 import org.apache.kafka.common.serialization.Serde;
 import org.apache.kafka.common.serialization.Serdes;
 import org.example.model.Purchase;
 import org.example.model.Total;
 
 public final class CustomSerdes {
-    private CustomSerdes() {}
+    private CustomSerdes() {
+    }
+
     public static Serde<Purchase> Purchase() {
         JsonPojoSerializer<Purchase> serializer = new JsonPojoSerializer<>();
         JsonPojoDeserializer<Purchase> deserializer = new JsonPojoDeserializer<>(Purchase.class);

@@ -1,6 +1,13 @@
 package org.example;
 
+// Purpose: Read sales transaction data from a Kafka topic,
+//          aggregates product quantities and total sales on data stream,
+//          and writes results to a second Kafka topic.
+// Author:  Gary A. Stafford
+// Date: 2022-09-07
+
 import org.apache.kafka.clients.consumer.ConsumerConfig;
+import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.common.serialization.Serdes;
 import org.apache.kafka.streams.*;
 import org.apache.kafka.streams.kstream.*;
@@ -20,11 +27,12 @@ public class Main {
 
     public static void main(String[] args) {
         System.out.println("Starting...");
+
         Properties props = new Properties();
-        props.put(StreamsConfig.APPLICATION_ID_CONFIG, "drink-totals-application" + LocalDateTime.now().hashCode());
+        props.put(StreamsConfig.APPLICATION_ID_CONFIG, "drink-totals-application" + LocalDateTime.now().hashCode()); // + LocalDateTime.now().hashCode());
         props.put(StreamsConfig.BOOTSTRAP_SERVERS_CONFIG, BOOTSTRAP_SERVERS);
         props.put(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, "earliest");
-
+        props.put(StreamsConfig.COMMIT_INTERVAL_MS_CONFIG, 10);
 
         StreamsBuilder builder = new StreamsBuilder();
         final KStream<Void, Purchase> purchases = builder.stream(
@@ -32,31 +40,29 @@ public class Main {
 
 //        purchases.foreach((key, value) -> System.out.println(key + ": " + value.toString()));
 
-        KStream<String, Total> totals = purchases.flatMap(
-                        (KeyValueMapper<Void, Purchase, Iterable<KeyValue<String, Total>>>) (key, value) -> {
-                            List<KeyValue<String, Total>> result = new ArrayList<>();
-                            result.add(new KeyValue<>(value.getProductId(), new Total(
-                                    LocalDateTime.now().toString(),
-                                    value.getProductId(),
-                                    value.getQuantity(),
-                                    value.getTotalPurchase()
+        purchases
+                .flatMap((KeyValueMapper<Void, Purchase, Iterable<KeyValue<String, Total>>>) (key, value) -> {
+                    List<KeyValue<String, Total>> result = new ArrayList<>();
+                    result.add(new KeyValue<>(value.getProductId(), new Total(
+                            LocalDateTime.now().toString(),
+                            value.getProductId(),
+                            value.getQuantity(),
+                            value.getTotalPurchase()
 
-                            )));
-
-                            return result;
-                        }
-                )
+                    )));
+                    return result;
+                })
                 .groupByKey(Grouped.with(Serdes.String(), CustomSerdes.Total()))
                 .reduce((t1, t2) -> {
                     t2.setQuantity(t1.getQuantity() + t2.getQuantity());
                     t2.setTotalPurchases(t1.getTotalPurchases().add(t2.getTotalPurchases()));
                     return t2;
                 })
-                .toStream();
-//
-        Topology topology = builder.build();
+                .toStream()
+                .to(OUTPUT_TOPIC, Produced.with(Serdes.String(), CustomSerdes.Total()));
 
-        System.out.printf("---> %s%n", topology.describe().toString());
+//        Topology topology = builder.build();
+//        System.out.printf("---> %s%n", topology.describe().toString());
 
 //        KStream<String, Total> runningTotals = totals
 //                .groupByKey()
@@ -68,15 +74,13 @@ public class Main {
 //                        })
 //                .toStream();
 
-        totals.foreach((key, value) -> System.out.println(key + ": " + value.toString()));
+//        totals.foreach((key, value) -> System.out.println(key + ": " + value.toString()));
 
-//        runningTotals.to(OUTPUT_TOPIC, Produced.with(Serdes.String(), CustomSerdes.Total()));
+//        totals.to(OUTPUT_TOPIC, Produced.with(Serdes.String(), CustomSerdes.Total()));
 
-        //.foreach((key, value) -> System.out.println(key + ": " + value.toString()));
 
         KafkaStreams streams = new KafkaStreams(builder.build(), props);
         streams.start();
-        System.out.println("Stopping...");
-
+        System.out.println("Running...");
     }
 }
