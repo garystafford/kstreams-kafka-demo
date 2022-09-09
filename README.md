@@ -111,7 +111,7 @@ JAVA_HOME=/Users/garystafford/Library/Java/JavaVirtualMachines/corretto-17.0.3
 # compile to uber jar
 gradle clean shadowJar
 
-java -cp ../kstreams-kafka-demo/build/libs/kstreams-kafka-demo-1.0-SNAPSHOT-all.jar org.example.Main
+java -cp ../kstreams-kafka-demo/build/libs/kstreams-kafka-demo-1.0.0-all.jar org.example.Main
 ```
 
 ## References
