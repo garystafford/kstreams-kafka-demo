@@ -1,6 +1,6 @@
 # Apache Kafka Streams Demo
 
-Apache Kafka Streams streaming data analytics demonstration
+[Apache Kafka Streams](https://kafka.apache.org/documentation/streams/) streaming data analytics demonstration
 using [Streaming Synthetic Sales Data Generator](https://github.com/garystafford/streaming-sales-generator). Outputs
 running total of individual drink quantities and total purchases to output Kafka topic.
 
@@ -119,3 +119,7 @@ java -cp ../kstreams-kafka-demo/build/libs/kstreams-kafka-demo-1.0-SNAPSHOT-all.
 - <https://github.com/apache/kafka/blob/1.0/streams/examples/src/main/java/org/apache/kafka/streams/examples/pageview/PageViewTypedDemo.java>
 - <https://github.com/simplesteph/kafka-streams-course>
 - <https://medium.com/@agvillamizar/implementing-custom-serdes-for-java-objects-using-json-serializer-and-deserializer-in-kafka-streams-d794b66e7c03>
+
+---
+
+_The contents of this repository represent my viewpoints and not of my past or current employers, including Amazon Web Services (AWS). All third-party libraries, modules, plugins, and SDKs are the property of their respective owners. The author(s) assumes no responsibility or liability for any errors or omissions in the content of this site. The information contained in this site is provided on an "as is" basis with no guarantees of completeness, accuracy, usefulness or timeliness._
