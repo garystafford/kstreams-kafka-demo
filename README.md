@@ -19,16 +19,16 @@ Short [YouTube video](https://youtu.be/Hdo4giJePCk) demonstration of this projec
 Sample messages:
 
 ```txt
-{"transaction_time": "2022-09-09 14:21:34.290884", "product_id": "CS11", "price": 4.99, "quantity": 1, "is_member": true, "member_discount": 0.1, "add_supplements": false, "supplement_price": 0.0, "total_purchase": 4.49}
-{"transaction_time": "2022-09-09 14:21:37.521843", "product_id": "CS05", "price": 4.99, "quantity": 1, "is_member": true, "member_discount": 0.1, "add_supplements": false, "supplement_price": 0.0, "total_purchase": 4.49}
-{"transaction_time": "2022-09-09 14:21:39.769392", "product_id": "CS04", "price": 4.99, "quantity": 1, "is_member": false, "member_discount": 0.0, "add_supplements": false, "supplement_price": 0.0, "total_purchase": 4.99}
-{"transaction_time": "2022-09-09 14:21:43.001379", "product_id": "CS03", "price": 4.99, "quantity": 3, "is_member": true, "member_discount": 0.1, "add_supplements": false, "supplement_price": 0.0, "total_purchase": 13.47}
-{"transaction_time": "2022-09-09 14:21:46.233837", "product_id": "CS03", "price": 4.99, "quantity": 1, "is_member": true, "member_discount": 0.1, "add_supplements": false, "supplement_price": 0.0, "total_purchase": 4.49}
-{"transaction_time": "2022-09-09 14:21:47.466571", "product_id": "CS05", "price": 4.99, "quantity": 1, "is_member": false, "member_discount": 0.0, "add_supplements": false, "supplement_price": 0.0, "total_purchase": 4.99}
-{"transaction_time": "2022-09-09 14:21:49.598899", "product_id": "CS09", "price": 4.99, "quantity": 2, "is_member": false, "member_discount": 0.0, "add_supplements": false, "supplement_price": 0.0, "total_purchase": 9.98}
-{"transaction_time": "2022-09-09 14:21:50.828926", "product_id": "CS05", "price": 4.99, "quantity": 1, "is_member": false, "member_discount": 0.0, "add_supplements": false, "supplement_price": 0.0, "total_purchase": 4.99}
-{"transaction_time": "2022-09-09 14:21:52.056816", "product_id": "IS03", "price": 5.49, "quantity": 2, "is_member": true, "member_discount": 0.1, "add_supplements": false, "supplement_price": 0.0, "total_purchase": 9.88}
-{"transaction_time": "2022-09-09 14:21:55.290320", "product_id": "IS03", "price": 5.49, "quantity": 1, "is_member": false, "member_discount": 0.0, "add_supplements": false, "supplement_price": 0.0, "total_purchase": 5.49}
+{"transaction_time": "2022-09-09 18:15:14.260159", "product_id": "SF06", "price": 5.99, "quantity": 1, "is_member": false, "member_discount": 0.0, "add_supplements": false, "supplement_price": 0.0, "total_purchase": 5.99}
+{"transaction_time": "2022-09-09 18:15:17.484820", "product_id": "CS09", "price": 4.99, "quantity": 2, "is_member": true, "member_discount": 0.1, "add_supplements": false, "supplement_price": 0.0, "total_purchase": 8.98}
+{"transaction_time": "2022-09-09 18:15:19.711103", "product_id": "CS02", "price": 4.99, "quantity": 1, "is_member": false, "member_discount": 0.0, "add_supplements": false, "supplement_price": 0.0, "total_purchase": 4.99}
+{"transaction_time": "2022-09-09 18:15:22.942512", "product_id": "CS05", "price": 4.99, "quantity": 1, "is_member": false, "member_discount": 0.0, "add_supplements": false, "supplement_price": 0.0, "total_purchase": 4.99}
+{"transaction_time": "2022-09-09 18:15:26.086557", "product_id": "IS01", "price": 5.49, "quantity": 1, "is_member": false, "member_discount": 0.0, "add_supplements": false, "supplement_price": 0.0, "total_purchase": 5.49}
+{"transaction_time": "2022-09-09 18:15:29.220133", "product_id": "SF03", "price": 5.99, "quantity": 2, "is_member": false, "member_discount": 0.0, "add_supplements": false, "supplement_price": 0.0, "total_purchase": 11.98}
+{"transaction_time": "2022-09-09 18:15:32.351425", "product_id": "CS08", "price": 4.99, "quantity": 1, "is_member": true, "member_discount": 0.1, "add_supplements": false, "supplement_price": 0.0, "total_purchase": 4.49}
+{"transaction_time": "2022-09-09 18:15:34.473913", "product_id": "CS05", "price": 4.99, "quantity": 3, "is_member": false, "member_discount": 0.0, "add_supplements": false, "supplement_price": 0.0, "total_purchase": 14.97}
+{"transaction_time": "2022-09-09 18:15:35.706493", "product_id": "SC03", "price": 5.99, "quantity": 2, "is_member": true, "member_discount": 0.1, "add_supplements": false, "supplement_price": 0.0, "total_purchase": 10.78}
+{"transaction_time": "2022-09-09 18:15:36.938348", "product_id": "CS09", "price": 4.99, "quantity": 1, "is_member": false, "member_discount": 0.0, "add_supplements": false, "supplement_price": 0.0, "total_purchase": 4.99}
 ```
 
 ## Output Topic: Totals
@@ -36,16 +36,16 @@ Sample messages:
 Sample messages:
 
 ```txt
-{"event_time":"2022-09-09T10:21:32.291510","product_id":"CS10","quantity":3,"total_purchases":14.97}
-{"event_time":"2022-09-09T10:21:34.518932","product_id":"CS11","quantity":1,"total_purchases":4.49}
-{"event_time":"2022-09-09T10:21:37.769531","product_id":"CS05","quantity":1,"total_purchases":4.49}
-{"event_time":"2022-09-09T10:21:39.997495","product_id":"CS04","quantity":4,"total_purchases":21.25}
-{"event_time":"2022-09-09T10:21:43.230841","product_id":"CS03","quantity":4,"total_purchases":19.75}
-{"event_time":"2022-09-09T10:21:46.464235","product_id":"CS03","quantity":5,"total_purchases":24.24}
-{"event_time":"2022-09-09T10:21:47.600491","product_id":"CS05","quantity":2,"total_purchases":9.48}
-{"event_time":"2022-09-09T10:21:49.826389","product_id":"CS09","quantity":4,"total_purchases":23.94}
-{"event_time":"2022-09-09T10:21:51.054408","product_id":"CS05","quantity":3,"total_purchases":14.47}
-{"event_time":"2022-09-09T10:21:52.285675","product_id":"IS03","quantity":4,"total_purchases":22.30}
+{"event_time":"2022-09-09T14:15:06.444752","product_id":"CS04","quantity":17,"total_purchases":82.12}
+{"event_time":"2022-09-09T14:15:07.672817","product_id":"IS02","quantity":32,"total_purchases":180.48}
+{"event_time":"2022-09-09T14:15:09.909704","product_id":"CS09","quantity":25,"total_purchases":131.50}
+{"event_time":"2022-09-09T14:15:12.034612","product_id":"SF05","quantity":21,"total_purchases":142.08}
+{"event_time":"2022-09-09T14:15:13.260653","product_id":"CS09","quantity":26,"total_purchases":135.99}
+{"event_time":"2022-09-09T14:15:14.483838","product_id":"SF06","quantity":23,"total_purchases":152.66}
+{"event_time":"2022-09-09T14:15:17.706923","product_id":"CS09","quantity":28,"total_purchases":144.97}
+{"event_time":"2022-09-09T14:15:19.946669","product_id":"CS02","quantity":21,"total_purchases":114.24}
+{"event_time":"2022-09-09T14:15:23.082590","product_id":"CS05","quantity":28,"total_purchases":141.69}
+{"event_time":"2022-09-09T14:15:26.214311","product_id":"IS01","quantity":19,"total_purchases":106.64}
 ```
 
 ## Commands
