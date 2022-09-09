@@ -93,7 +93,7 @@ export OUTPUT_TOPIC="demo.totals"
 kafka-topics.sh --list \
     --bootstrap-server $BOOTSTRAP_SERVERS
 
-# describe a topic
+# describe topic
 kafka-topics.sh --describe \
     --topic $OUTPUT_TOPIC \
     --bootstrap-server $BOOTSTRAP_SERVERS
