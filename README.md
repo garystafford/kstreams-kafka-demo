@@ -62,7 +62,7 @@ JAVA_HOME=~/Library/Java/JavaVirtualMachines/corretto-17.0.3/Contents/Home/
 java -cp build/libs/kstreams-kafka-demo-1.0.0-all.jar org.example.Main
 ```
 
-## Docker Stack
+### Docker Stack
 
 Demonstration uses Kafka/Flink [Docker Swarm Stack](https://github.com/garystafford/streaming-sales-generator/blob/main/docker-compose.yml) from 'Sales Data Generator' project.
   
@@ -79,6 +79,8 @@ docker stack deploy kafka-flink --compose-file docker-compose.yml
 ```
 
 ### Docker/Kafka
+
+Helpful Kafka commands.
 
 ```shell
 docker exec -it $(docker container ls --filter  name=kafka-flink_kafka --format "{{.ID}}") bash
