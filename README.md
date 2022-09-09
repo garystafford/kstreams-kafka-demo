@@ -1,8 +1,8 @@
 # Apache Kafka Streams Demo
 
 [Apache Kafka Streams](https://kafka.apache.org/documentation/streams/) streaming data analytics demonstration
-using [Streaming Synthetic Sales Data Generator](https://github.com/garystafford/streaming-sales-generator). Outputs
-running total of individual drink quantities and total purchases to output Kafka topic.
+using [Streaming Synthetic Sales Data Generator](https://github.com/garystafford/streaming-sales-generator). Outputs a stream of
+running totals of individual drink quantities and total purchases to output Kafka topic.
 
 * Demonstration uses
   Kafka/Flink [Docker Swarm Stack](https://github.com/garystafford/streaming-sales-generator/blob/main/docker-compose.yml)
