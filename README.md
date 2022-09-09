@@ -8,11 +8,11 @@ running total of individual drink quantities and total purchases to output Kafka
   Kafka/Flink [Docker Swarm Stack](https://github.com/garystafford/streaming-sales-generator/blob/main/docker-compose.yml)
   from 'Sales Data Generator' project.
 
-* Uber JAR for demonstration built with Gradle using OpenJDK version 17.0.3.
+* Uber JAR for demonstration built with Gradle using Amazon Corretto (OpenJDK) version 17.0.3.
 
 ## Video Demonstration
 
-Short [YouTube video](https://youtu.be/ja0M_2zdbfs) demonstration of this project (video only - no audio).
+Short [YouTube video](https://youtu.be/Hdo4giJePCk) demonstration of this project (video only - no audio).
 
 ## Input Topic: Purchases
 
@@ -109,5 +109,6 @@ java -cp ../kstreams-kafka-demo/build/libs/kstreams-kafka-demo-1.0-SNAPSHOT-all.
 
 ## References
 
--<https://github.com/apache/kafka/blob/1.0/streams/examples/src/main/java/org/apache/kafka/streams/examples/pageview/PageViewTypedDemo.java>
--<https://github.com/simplesteph/kafka-streams-course>
+- <https://github.com/apache/kafka/blob/1.0/streams/examples/src/main/java/org/apache/kafka/streams/examples/pageview/PageViewTypedDemo.java>
+- <https://github.com/simplesteph/kafka-streams-course>
+- <https://medium.com/@agvillamizar/implementing-custom-serdes-for-java-objects-using-json-serializer-and-deserializer-in-kafka-streams-d794b66e7c03>
