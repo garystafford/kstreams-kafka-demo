@@ -6,9 +6,9 @@ running total of individual drink quantities and total purchases to output Kafka
 
 * Demonstration uses
   Kafka/Flink [Docker Swarm Stack](https://github.com/garystafford/streaming-sales-generator/blob/main/docker-compose.yml)
-  from 'Sales Data Generator' project.
+  from 'Sales Data Generator' project
 
-* Uber JAR for demonstration built with Gradle using Amazon Corretto (OpenJDK) version 17.0.3.
+* Uber JAR built with Gradle using Amazon Corretto (OpenJDK) version 17
 
 ## Video Demonstration
 
@@ -61,13 +61,16 @@ export BOOTSTRAP_SERVERS="localhost:9092"
 export INPUT_TOPIC="demo.purchases"
 export OUTPUT_TOPIC="demo.totals"
 
+# list all topics
 kafka-topics.sh --list \
     --bootstrap-server $BOOTSTRAP_SERVERS
 
+# describe a topic
 kafka-topics.sh --describe \
     --topic $OUTPUT_TOPIC \
     --bootstrap-server $BOOTSTRAP_SERVERS
 
+# delete topic
 kafka-topics.sh --delete \
     --topic $INPUT_TOPIC \
     --bootstrap-server $BOOTSTRAP_SERVERS
@@ -76,6 +79,7 @@ kafka-topics.sh --delete \
     --topic $OUTPUT_TOPIC \
     --bootstrap-server $BOOTSTRAP_SERVERS
 
+# optional: create new topic (or they will be automatically created
 kafka-topics.sh --create \
     --topic $INPUT_TOPIC \
     --partitions 1 --replication-factor 1 \
@@ -88,6 +92,7 @@ kafka-topics.sh --create \
     --config cleanup.policy=compact \
     --bootstrap-server $BOOTSTRAP_SERVERS
 
+# view messages
 kafka-console-consumer.sh \
     --topic $INPUT_TOPIC --from-beginning \
     --bootstrap-server $BOOTSTRAP_SERVERS
@@ -100,8 +105,10 @@ kafka-console-consumer.sh \
 ### Java Compile and Run
 
 ```shell
+# optional - set java version
 JAVA_HOME=/Users/garystafford/Library/Java/JavaVirtualMachines/corretto-17.0.3
 
+# compile to uber jar
 gradle clean shadowJar
 
 java -cp ../kstreams-kafka-demo/build/libs/kstreams-kafka-demo-1.0-SNAPSHOT-all.jar org.example.Main
