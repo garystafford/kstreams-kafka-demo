@@ -2,14 +2,8 @@ package org.example;
 
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.common.serialization.Serdes;
-import org.apache.kafka.streams.KafkaStreams;
-import org.apache.kafka.streams.KeyValue;
-import org.apache.kafka.streams.StreamsBuilder;
-import org.apache.kafka.streams.StreamsConfig;
-import org.apache.kafka.streams.kstream.Consumed;
-import org.apache.kafka.streams.kstream.KStream;
-import org.apache.kafka.streams.kstream.KeyValueMapper;
-import org.apache.kafka.streams.kstream.Produced;
+import org.apache.kafka.streams.*;
+import org.apache.kafka.streams.kstream.*;
 import org.example.model.Purchase;
 import org.example.model.Total;
 import org.example.serializer.CustomSerdes;
@@ -36,22 +30,49 @@ public class Main {
         final KStream<Void, Purchase> purchases = builder.stream(
                 INPUT_TOPIC, Consumed.with(Serdes.Void(), CustomSerdes.Purchase()));
 
-        purchases.foreach((key, value) -> System.out.println(key + ": " + value.toString()));
+//        purchases.foreach((key, value) -> System.out.println(key + ": " + value.toString()));
 
-        purchases.flatMap(
-                (KeyValueMapper<Void, Purchase, Iterable<KeyValue<String, Total>>>) (key, value) -> {
-                    List<KeyValue<String, Total>> result = new ArrayList<>();
-                    result.add(new KeyValue<>(value.getProductId(), new Total(
-                            LocalDateTime.now().toString(),
-                            value.getProductId(),
-                            value.getQuantity(),
-                            value.getTotalPurchase()
+        KStream<String, Total> totals = purchases.flatMap(
+                        (KeyValueMapper<Void, Purchase, Iterable<KeyValue<String, Total>>>) (key, value) -> {
+                            List<KeyValue<String, Total>> result = new ArrayList<>();
+                            result.add(new KeyValue<>(value.getProductId(), new Total(
+                                    LocalDateTime.now().toString(),
+                                    value.getProductId(),
+                                    value.getQuantity(),
+                                    value.getTotalPurchase()
 
-                    )));
+                            )));
 
-                    return result;
-                }
-        ).to(OUTPUT_TOPIC, Produced.with(Serdes.String(), CustomSerdes.Total()));
+                            return result;
+                        }
+                )
+                .groupByKey(Grouped.with(Serdes.String(), CustomSerdes.Total()))
+                .reduce((t1, t2) -> {
+                    t2.setQuantity(t1.getQuantity() + t2.getQuantity());
+                    t2.setTotalPurchases(t1.getTotalPurchases().add(t2.getTotalPurchases()));
+                    return t2;
+                })
+                .toStream();
+//
+        Topology topology = builder.build();
+
+        System.out.printf("---> %s%n", topology.describe().toString());
+
+//        KStream<String, Total> runningTotals = totals
+//                .groupByKey()
+//                .aggregate(Total::new,
+//                        (String k, Total t1, Total t2) -> {
+//                            t2.setQuantity(t1.getQuantity() + t2.getQuantity());
+//                            t2.setTotalPurchases(t1.getTotalPurchases().add(t2.getTotalPurchases()));
+//                            return t2;
+//                        })
+//                .toStream();
+
+        totals.foreach((key, value) -> System.out.println(key + ": " + value.toString()));
+
+//        runningTotals.to(OUTPUT_TOPIC, Produced.with(Serdes.String(), CustomSerdes.Total()));
+
+        //.foreach((key, value) -> System.out.println(key + ": " + value.toString()));
 
         KafkaStreams streams = new KafkaStreams(builder.build(), props);
         streams.start();
