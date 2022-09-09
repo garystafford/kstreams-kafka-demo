@@ -1,6 +1,6 @@
 # Apache Kafka Streams Demo
 
-Apache Kafka Streams streaming data analytics demonstration
+[Apache Kafka Streams](https://kafka.apache.org/documentation/streams/) streaming data analytics demonstration
 using [Streaming Synthetic Sales Data Generator](https://github.com/garystafford/streaming-sales-generator). Outputs
 running total of individual drink quantities and total purchases to output Kafka topic.
 
