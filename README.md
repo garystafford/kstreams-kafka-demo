@@ -8,7 +8,7 @@ running total of individual drink quantities and total purchases to output Kafka
   Kafka/Flink [Docker Swarm Stack](https://github.com/garystafford/streaming-sales-generator/blob/main/docker-compose.yml)
   from 'Sales Data Generator' project
 
-* Uber JAR built with Gradle using Amazon Corretto (OpenJDK) version 17
+* Uber JAR built with Gradle using Amazon Corretto (OpenJDK) version 17 (openjdk version "17.0.3" 2022-04-19 LTS)
 
 ## Video Demonstration
 
@@ -49,6 +49,19 @@ Sample messages:
 ```
 
 ## Commands
+
+### Java Compile and Run App
+
+```shell
+# optional - set java version
+JAVA_HOME=~/Library/Java/JavaVirtualMachines/corretto-17.0.3/Contents/Home/
+
+# compile to uber jar
+./gradlew clean shadowJar
+
+# run the streaming application
+java -cp build/libs/kstreams-kafka-demo-1.0.0-all.jar org.example.Main
+```
 
 ### Docker/Kafka
 
@@ -100,18 +113,6 @@ kafka-console-consumer.sh \
 kafka-console-consumer.sh \
     --topic $OUTPUT_TOPIC --from-beginning \
     --bootstrap-server $BOOTSTRAP_SERVERS
-```
-
-### Java Compile and Run
-
-```shell
-# optional - set java version
-JAVA_HOME=/Users/garystafford/Library/Java/JavaVirtualMachines/corretto-17.0.3
-
-# compile to uber jar
-./gradlew clean shadowJar
-
-java -cp build/libs/kstreams-kafka-demo-1.0.0-all.jar org.example.Main
 ```
 
 ## References
