@@ -14,9 +14,9 @@ running total of individual drink quantities and total purchases to output Kafka
 
 Short [YouTube video](https://youtu.be/Hdo4giJePCk) demonstration of this project (video only - no audio).
 
-## Input Topic: Purchases
+## Input Message Stream
 
-Sample messages:
+Sample sales purchase messages:
 
 ```txt
 {"transaction_time": "2022-09-09 18:15:14.260159", "product_id": "SF06", "price": 5.99, "quantity": 1, "is_member": false, "member_discount": 0.0, "add_supplements": false, "supplement_price": 0.0, "total_purchase": 5.99}
@@ -31,9 +31,9 @@ Sample messages:
 {"transaction_time": "2022-09-09 18:15:36.938348", "product_id": "CS09", "price": 4.99, "quantity": 1, "is_member": false, "member_discount": 0.0, "add_supplements": false, "supplement_price": 0.0, "total_purchase": 4.99}
 ```
 
-## Output Topic: Totals
+## Output Message Stream
 
-Sample messages:
+Sample running product total messages:
 
 ```txt
 {"event_time":"2022-09-09T14:15:06.444752","product_id":"CS04","quantity":17,"total_purchases":82.12}
