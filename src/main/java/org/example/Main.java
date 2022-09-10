@@ -20,6 +20,7 @@ import org.example.model.Purchase;
 import org.example.model.Total;
 import org.example.serializer.CustomSerdes;
 
+import java.time.Instant;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -34,7 +35,7 @@ public class Main {
         System.out.println("Starting...");
 
         Properties props = new Properties();
-        props.put(StreamsConfig.APPLICATION_ID_CONFIG, "kstreams-demo-app-1"); // + LocalDateTime.now().hashCode());
+        props.put(StreamsConfig.APPLICATION_ID_CONFIG, "kstreams-demo-app"); // + LocalDateTime.now().hashCode());
         props.put(StreamsConfig.BOOTSTRAP_SERVERS_CONFIG, BOOTSTRAP_SERVERS);
         props.put(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, "earliest");
         props.put(StreamsConfig.COMMIT_INTERVAL_MS_CONFIG, 10); // Used to speed up publishing of messages for demo
@@ -46,7 +47,7 @@ public class Main {
                 .flatMap((KeyValueMapper<Void, Purchase, Iterable<KeyValue<String, Total>>>) (unused, purchase) -> {
                     List<KeyValue<String, Total>> result = new ArrayList<>();
                     result.add(new KeyValue<>(purchase.getProductId(), new Total(
-                            LocalDateTime.now().toString(),
+                            Instant.now().toString(),
                             purchase.getProductId(),
                             1,
                             purchase.getQuantity(),
