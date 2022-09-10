@@ -12,7 +12,10 @@ import org.apache.kafka.streams.KafkaStreams;
 import org.apache.kafka.streams.KeyValue;
 import org.apache.kafka.streams.StreamsBuilder;
 import org.apache.kafka.streams.StreamsConfig;
-import org.apache.kafka.streams.kstream.*;
+import org.apache.kafka.streams.kstream.Consumed;
+import org.apache.kafka.streams.kstream.Grouped;
+import org.apache.kafka.streams.kstream.KeyValueMapper;
+import org.apache.kafka.streams.kstream.Produced;
 import org.example.model.Purchase;
 import org.example.model.Total;
 import org.example.serializer.CustomSerdes;
@@ -39,28 +42,27 @@ public class Main {
         StreamsBuilder builder = new StreamsBuilder();
         builder
                 .stream(INPUT_TOPIC, Consumed.with(Serdes.Void(), CustomSerdes.Purchase()))
-                .flatMap((KeyValueMapper<Void, Purchase, Iterable<KeyValue<String, Total>>>) (key, value) -> {
+                .peek((unused, purchase) -> System.out.println(purchase.toString()))
+                .flatMap((KeyValueMapper<Void, Purchase, Iterable<KeyValue<String, Total>>>) (unused, purchase) -> {
                     List<KeyValue<String, Total>> result = new ArrayList<>();
-                    result.add(new KeyValue<>(value.getProductId(), new Total(
+                    result.add(new KeyValue<>(purchase.getProductId(), new Total(
                             LocalDateTime.now().toString(),
-                            value.getProductId(),
-                            value.getQuantity(),
-                            value.getTotalPurchase()
+                            purchase.getProductId(),
+                            purchase.getQuantity(),
+                            purchase.getTotalPurchase()
 
                     )));
                     return result;
                 })
                 .groupByKey(Grouped.with(Serdes.String(), CustomSerdes.Total()))
-                .reduce((t1, t2) -> {
-                    t2.setQuantity(t1.getQuantity() + t2.getQuantity());
-                    t2.setTotalPurchases(t1.getTotalPurchases().add(t2.getTotalPurchases()));
-                    return t2;
+                .reduce((total1, total2) -> {
+                    total2.setQuantity(total1.getQuantity() + total2.getQuantity());
+                    total2.setTotalPurchases(total1.getTotalPurchases().add(total2.getTotalPurchases()));
+                    return total2;
                 })
                 .toStream()
+                .peek((productId, total) -> System.out.println(total.toString()))
                 .to(OUTPUT_TOPIC, Produced.with(Serdes.String(), CustomSerdes.Total()));
-
-        // Debugging to console vs publishing to kafka - replace '.to' method above
-        // .foreach((key, value) -> System.out.println(key + ": " + value.toString()));
 
         //  Topology topology = builder.build();
         // System.out.printf("---> %s%n", topology.describe().toString());
