@@ -37,16 +37,18 @@ Sample sales purchase messages:
 Sample running product total messages:
 
 ```txt
-{"event_time":"2022-09-09T22:09:49.287766","product_id":"IS03","transactions":16,"quantities":22,"sales":129.67}
-{"event_time":"2022-09-09T22:09:51.519384","product_id":"CS09","transactions":24,"quantities":35,"sales":181.20}
-{"event_time":"2022-09-09T22:09:53.789591","product_id":"IS04","transactions":13,"quantities":17,"sales":95.11}
-{"event_time":"2022-09-09T22:09:55.044588","product_id":"IS02","transactions":23,"quantities":28,"sales":161.81}
-{"event_time":"2022-09-09T22:09:56.288325","product_id":"SF06","transactions":21,"quantities":27,"sales":177.02}
-{"event_time":"2022-09-09T22:09:58.413930","product_id":"SF01","transactions":9,"quantities":12,"sales":76.45}
-{"event_time":"2022-09-09T22:09:59.654884","product_id":"CS07","transactions":14,"quantities":16,"sales":84.90}
-{"event_time":"2022-09-09T22:10:01.911662","product_id":"IS02","transactions":24,"quantities":29,"sales":167.30}
-{"event_time":"2022-09-09T22:10:04.040316","product_id":"SC04","transactions":25,"quantities":31,"sales":199.58}
-{"event_time":"2022-09-09T22:10:06.273120","product_id":"CS01","transactions":6,"quantities":7,"sales":36.71}```
+{"event_time":"2022-09-10T02:30:04.606869Z","product_id":"IS02","transactions":17,"quantities":34,"sales":204.71}
+{"event_time":"2022-09-10T02:30:05.836092Z","product_id":"SC03","transactions":14,"quantities":15,"sales":103.79}
+{"event_time":"2022-09-10T02:30:09.066187Z","product_id":"CS09","transactions":22,"quantities":46,"sales":249.13}
+{"event_time":"2022-09-10T02:30:12.295890Z","product_id":"SC01","transactions":11,"quantities":23,"sales":164.82}
+{"event_time":"2022-09-10T02:30:13.520157Z","product_id":"SC04","transactions":22,"quantities":45,"sales":297.96}
+{"event_time":"2022-09-10T02:30:15.747421Z","product_id":"SC05","transactions":14,"quantities":23,"sales":165.63}
+{"event_time":"2022-09-10T02:30:16.999707Z","product_id":"CS10","transactions":12,"quantities":22,"sales":122.80}
+{"event_time":"2022-09-10T02:30:18.235349Z","product_id":"CS08","transactions":29,"quantities":46,"sales":252.74}
+{"event_time":"2022-09-10T02:30:19.360850Z","product_id":"CS03","transactions":7,"quantities":17,"sales":101.07}
+{"event_time":"2022-09-10T02:30:21.601005Z","product_id":"CS03","transactions":8,"quantities":18,"sales":105.56}
+{"event_time":"2022-09-10T02:30:22.834962Z","product_id":"IS04","transactions":12,"quantities":24,"sales":159.76}
+```
 
 ## Compile and Run KStreams App
 
