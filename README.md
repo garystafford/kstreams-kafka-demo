@@ -9,6 +9,8 @@ using the [Streaming Synthetic Sales Data Generator](https://github.com/garystaf
 
 * Uber JAR built with Gradle using Amazon Corretto (OpenJDK) version 17 (openjdk version "17.0.3" 2022-04-19 LTS)
 
+![KStreams App](pics/kstreams_app.png)
+
 ## Video Demonstration
 
 Short [YouTube video](https://youtu.be/Hdo4giJePCk) demonstration of this project (video only - no audio).
