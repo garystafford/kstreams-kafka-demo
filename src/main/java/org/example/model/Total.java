@@ -18,9 +18,12 @@ public class Total implements Serializable {
     @SerializedName("product_id")
     String productId;
 
-    @SerializedName("quantity")
-    Integer quantity;
+    @SerializedName("transactions")
+    Integer transactions;
 
-    @SerializedName("total_purchases")
-    BigDecimal totalPurchases;
+    @SerializedName("quantities")
+    Integer quantities;
+
+    @SerializedName("sales")
+    BigDecimal sales;
 }

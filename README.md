@@ -1,7 +1,7 @@
 # Apache Kafka Streams Demo
 
 [Apache Kafka Streams](https://kafka.apache.org/documentation/streams/) streaming data analytics demonstration, written in Java and
-using the [Streaming Synthetic Sales Data Generator](https://github.com/garystafford/streaming-sales-generator). Consumes a stream of sales transaction messages and publishes a stream of running totals of sales quantities and total purchases to a Kafka topic.
+using the [Streaming Synthetic Sales Data Generator](https://github.com/garystafford/streaming-sales-generator). Consumes a stream of sales transaction messages and publishes a stream of running totals of product transactions, quantities, and sales to a Kafka topic.
 
 * Demonstration uses
   Kafka/Flink [Docker Swarm Stack](https://github.com/garystafford/streaming-sales-generator/blob/main/docker-compose.yml)
@@ -37,17 +37,16 @@ Sample sales purchase messages:
 Sample running product total messages:
 
 ```txt
-{"event_time":"2022-09-09T14:15:06.444752","product_id":"CS04","quantity":17,"total_purchases":82.12}
-{"event_time":"2022-09-09T14:15:07.672817","product_id":"IS02","quantity":32,"total_purchases":180.48}
-{"event_time":"2022-09-09T14:15:09.909704","product_id":"CS09","quantity":25,"total_purchases":131.50}
-{"event_time":"2022-09-09T14:15:12.034612","product_id":"SF05","quantity":21,"total_purchases":142.08}
-{"event_time":"2022-09-09T14:15:13.260653","product_id":"CS09","quantity":26,"total_purchases":135.99}
-{"event_time":"2022-09-09T14:15:14.483838","product_id":"SF06","quantity":23,"total_purchases":152.66}
-{"event_time":"2022-09-09T14:15:17.706923","product_id":"CS09","quantity":28,"total_purchases":144.97}
-{"event_time":"2022-09-09T14:15:19.946669","product_id":"CS02","quantity":21,"total_purchases":114.24}
-{"event_time":"2022-09-09T14:15:23.082590","product_id":"CS05","quantity":28,"total_purchases":141.69}
-{"event_time":"2022-09-09T14:15:26.214311","product_id":"IS01","quantity":19,"total_purchases":106.64}
-```
+{"event_time":"2022-09-09T22:09:49.287766","product_id":"IS03","transactions":16,"quantities":22,"sales":129.67}
+{"event_time":"2022-09-09T22:09:51.519384","product_id":"CS09","transactions":24,"quantities":35,"sales":181.20}
+{"event_time":"2022-09-09T22:09:53.789591","product_id":"IS04","transactions":13,"quantities":17,"sales":95.11}
+{"event_time":"2022-09-09T22:09:55.044588","product_id":"IS02","transactions":23,"quantities":28,"sales":161.81}
+{"event_time":"2022-09-09T22:09:56.288325","product_id":"SF06","transactions":21,"quantities":27,"sales":177.02}
+{"event_time":"2022-09-09T22:09:58.413930","product_id":"SF01","transactions":9,"quantities":12,"sales":76.45}
+{"event_time":"2022-09-09T22:09:59.654884","product_id":"CS07","transactions":14,"quantities":16,"sales":84.90}
+{"event_time":"2022-09-09T22:10:01.911662","product_id":"IS02","transactions":24,"quantities":29,"sales":167.30}
+{"event_time":"2022-09-09T22:10:04.040316","product_id":"SC04","transactions":25,"quantities":31,"sales":199.58}
+{"event_time":"2022-09-09T22:10:06.273120","product_id":"CS01","transactions":6,"quantities":7,"sales":36.71}```
 
 ## Compile and Run KStreams App
 

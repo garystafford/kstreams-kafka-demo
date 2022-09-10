@@ -34,7 +34,7 @@ public class Main {
         System.out.println("Starting...");
 
         Properties props = new Properties();
-        props.put(StreamsConfig.APPLICATION_ID_CONFIG, "kstreams-demo-app"); // + LocalDateTime.now().hashCode());
+        props.put(StreamsConfig.APPLICATION_ID_CONFIG, "kstreams-demo-app-1"); // + LocalDateTime.now().hashCode());
         props.put(StreamsConfig.BOOTSTRAP_SERVERS_CONFIG, BOOTSTRAP_SERVERS);
         props.put(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, "earliest");
         props.put(StreamsConfig.COMMIT_INTERVAL_MS_CONFIG, 10); // Used to speed up publishing of messages for demo
@@ -48,6 +48,7 @@ public class Main {
                     result.add(new KeyValue<>(purchase.getProductId(), new Total(
                             LocalDateTime.now().toString(),
                             purchase.getProductId(),
+                            1,
                             purchase.getQuantity(),
                             purchase.getTotalPurchase()
 
@@ -56,8 +57,9 @@ public class Main {
                 })
                 .groupByKey(Grouped.with(Serdes.String(), CustomSerdes.Total()))
                 .reduce((total1, total2) -> {
-                    total2.setQuantity(total1.getQuantity() + total2.getQuantity());
-                    total2.setTotalPurchases(total1.getTotalPurchases().add(total2.getTotalPurchases()));
+                    total2.setTransactions(total1.getTransactions() + total2.getTransactions());
+                    total2.setQuantities(total1.getQuantities() + total2.getQuantities());
+                    total2.setSales(total1.getSales().add(total2.getSales()));
                     return total2;
                 })
                 .toStream()
