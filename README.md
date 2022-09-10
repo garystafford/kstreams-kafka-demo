@@ -47,9 +47,7 @@ Sample running product total messages:
 {"event_time":"2022-09-09T14:15:26.214311","product_id":"IS01","quantity":19,"total_purchases":106.64}
 ```
 
-## Commands
-
-### Compile and Run Java App
+## Compile and Run the Java App
 
 ```shell
 # optional - set java version
@@ -62,7 +60,7 @@ JAVA_HOME=~/Library/Java/JavaVirtualMachines/corretto-17.0.3/Contents/Home/
 java -cp build/libs/kstreams-kafka-demo-1.0.0-all.jar org.example.Main
 ```
 
-### Docker Stack
+## Docker Stack
 
 Demonstration uses Kafka/Flink [Docker Swarm Stack](https://github.com/garystafford/streaming-sales-generator/blob/main/docker-compose.yml) from 'Sales Data Generator' project.
   
@@ -78,7 +76,7 @@ docker swarm init
 docker stack deploy kafka-flink --compose-file docker-compose.yml
 ```
 
-### Docker/Kafka
+## Kafka
 
 Helpful Kafka commands.
 
