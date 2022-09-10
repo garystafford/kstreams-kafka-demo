@@ -47,7 +47,7 @@ public class Main {
                 .flatMap((KeyValueMapper<Void, Purchase, Iterable<KeyValue<String, Total>>>) (unused, purchase) -> {
                     List<KeyValue<String, Total>> result = new ArrayList<>();
                     result.add(new KeyValue<>(purchase.getProductId(), new Total(
-                            Instant.now().toString(),
+                            "",
                             purchase.getProductId(),
                             1,
                             purchase.getQuantity(),
@@ -58,6 +58,7 @@ public class Main {
                 })
                 .groupByKey(Grouped.with(Serdes.String(), CustomSerdes.Total()))
                 .reduce((total1, total2) -> {
+                    total2.setEventTime(Instant.now().toString());
                     total2.setTransactions(total1.getTransactions() + total2.getTransactions());
                     total2.setQuantities(total1.getQuantities() + total2.getQuantities());
                     total2.setSales(total1.getSales().add(total2.getSales()));
