@@ -47,7 +47,7 @@ Sample running product total messages:
 {"event_time":"2022-09-09T14:15:26.214311","product_id":"IS01","quantity":19,"total_purchases":106.64}
 ```
 
-## Compile and Run the Java App
+## Compile and Run KStreams App
 
 ```shell
 # optional - set java version
