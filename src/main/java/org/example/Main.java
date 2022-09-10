@@ -1,7 +1,7 @@
 package org.example;
 
 // Purpose: Read sales transaction data from a Kafka topic,
-//          aggregates product quantities and total sales on data stream,
+//          aggregates product transactions, quantities, and sales on data stream,
 //          and writes results to a second Kafka topic.
 // Author:  Gary A. Stafford
 // Date: 2022-09-07
@@ -20,22 +20,21 @@ import org.example.model.Purchase;
 import org.example.model.Total;
 import org.example.serializer.CustomSerdes;
 
-import java.time.Instant;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
 public class Main {
-    static String BOOTSTRAP_SERVERS = "localhost:9092";
-    static String INPUT_TOPIC = "demo.purchases";
-    static String OUTPUT_TOPIC = "demo.totals";
+    final static String BOOTSTRAP_SERVERS = "localhost:9092";
+    final static String APPLICATION_ID = "kstreams-demo-app";
+    final static String INPUT_TOPIC = "demo.purchases";
+    final static String OUTPUT_TOPIC = "demo.totals";
 
     public static void main(String[] args) {
         System.out.println("Starting...");
 
         Properties props = new Properties();
-        props.put(StreamsConfig.APPLICATION_ID_CONFIG, "kstreams-demo-app"); // + LocalDateTime.now().hashCode());
+        props.put(StreamsConfig.APPLICATION_ID_CONFIG, APPLICATION_ID); // + LocalDateTime.now().hashCode());
         props.put(StreamsConfig.BOOTSTRAP_SERVERS_CONFIG, BOOTSTRAP_SERVERS);
         props.put(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, "earliest");
         props.put(StreamsConfig.COMMIT_INTERVAL_MS_CONFIG, 10); // Used to speed up publishing of messages for demo
