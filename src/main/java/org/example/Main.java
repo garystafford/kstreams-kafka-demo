@@ -25,6 +25,7 @@ import java.util.List;
 import java.util.Properties;
 
 public class Main {
+    // assumes PLAINTEXT authentication
     final static String BOOTSTRAP_SERVERS = "localhost:9092";
     final static String APPLICATION_ID = "kstreams-demo-app";
     final static String INPUT_TOPIC = "demo.purchases";
