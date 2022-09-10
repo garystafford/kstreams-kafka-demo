@@ -1,7 +1,7 @@
 # Apache Kafka Streams Demo
 
-[Apache Kafka Streams](https://kafka.apache.org/documentation/streams/) streaming data analytics demonstration
-using [Streaming Synthetic Sales Data Generator](https://github.com/garystafford/streaming-sales-generator). Consumes a stream of sales transaction messages and publishes a stream of running totals of sales quantities and total purchases to a Kafka topic.
+[Apache Kafka Streams](https://kafka.apache.org/documentation/streams/) streaming data analytics demonstration, written in Java and
+using the [Streaming Synthetic Sales Data Generator](https://github.com/garystafford/streaming-sales-generator). Consumes a stream of sales transaction messages and publishes a stream of running totals of sales quantities and total purchases to a Kafka topic.
 
 * Demonstration uses
   Kafka/Flink [Docker Swarm Stack](https://github.com/garystafford/streaming-sales-generator/blob/main/docker-compose.yml)
@@ -49,7 +49,7 @@ Sample running product total messages:
 
 ## Commands
 
-### Java Compile and Run App
+### Compile and Run Java App
 
 ```shell
 # optional - set java version
