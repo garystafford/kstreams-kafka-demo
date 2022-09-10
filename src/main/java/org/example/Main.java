@@ -32,6 +32,10 @@ public class Main {
     final static String OUTPUT_TOPIC = "demo.totals";
 
     public static void main(String[] args) {
+        kStreamPipeline();
+    }
+
+    private static void kStreamPipeline() {
         System.out.println("Starting...");
 
         Properties props = new Properties();
