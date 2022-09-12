@@ -53,14 +53,14 @@ Sample running product total messages:
 ## Compile and Run KStreams App
 
 ```shell
-# optional - set java version
+# optional - set java version (v17 is latest compatible)
 JAVA_HOME=~/Library/Java/JavaVirtualMachines/corretto-17.0.3/Contents/Home/
 
 # compile to uber jar
 ./gradlew clean shadowJar
 
 # run the streaming application
-java -cp build/libs/kstreams-kafka-demo-1.0.0-all.jar org.example.Main
+java -jar build/libs/kstreams-kafka-demo-1.0.0-all.jar
 ```
 
 ## Docker Stack

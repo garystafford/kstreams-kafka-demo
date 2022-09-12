@@ -12,6 +12,14 @@ plugins {
     id 'java'
 }
 
+jar {
+    manifest {
+        attributes(
+                'Main-Class': 'org.example.Main'
+        )
+    }
+}
+
 apply plugin: 'java'
 apply plugin: 'com.github.johnrengelman.shadow'
 
