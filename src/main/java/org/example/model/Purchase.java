@@ -15,6 +15,9 @@ public class Purchase implements Serializable {
     @SerializedName("transaction_time")
     private String transactionTime;
 
+    @SerializedName("transaction_id")
+    String transactionId;
+
     @SerializedName("product_id")
     private String productId;
 
