@@ -26,10 +26,10 @@ import java.util.Properties;
 
 public class Main {
     // assumes PLAINTEXT authentication
-    final static String BOOTSTRAP_SERVERS = "localhost:9092";
+    final static String BOOTSTRAP_SERVERS = "kafka:9092";
     final static String APPLICATION_ID = "kstreams-demo-app";
     final static String INPUT_TOPIC = "demo.purchases";
-    final static String OUTPUT_TOPIC = "demo.totals";
+    final static String OUTPUT_TOPIC = "demo.running.totals";
 
     public static void main(String[] args) {
         kStreamPipeline();
@@ -39,7 +39,7 @@ public class Main {
         System.out.println("Starting...");
 
         Properties props = new Properties();
-        props.put(StreamsConfig.APPLICATION_ID_CONFIG, APPLICATION_ID); // + LocalDateTime.now().hashCode());
+        props.put(StreamsConfig.APPLICATION_ID_CONFIG, APPLICATION_ID);
         props.put(StreamsConfig.BOOTSTRAP_SERVERS_CONFIG, BOOTSTRAP_SERVERS);
         props.put(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, "earliest");
         props.put(StreamsConfig.COMMIT_INTERVAL_MS_CONFIG, 10); // Used to speed up publishing of messages for demo

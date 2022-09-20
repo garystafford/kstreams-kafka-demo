@@ -7,7 +7,7 @@ using the [Streaming Synthetic Sales Data Generator](https://github.com/garystaf
   Kafka/Flink [Docker Swarm Stack](https://github.com/garystafford/streaming-sales-generator/blob/main/docker-compose.yml)
   from 'Sales Data Generator' project
 
-* Uber JAR built with Gradle using Amazon Corretto (OpenJDK) version 17 (openjdk version "17.0.3" 2022-04-19 LTS)
+* Uber JAR built with Gradle using OpenJDK version 17 (openjdk version "17.0.2" 2022-01-18)
 
 ![KStreams App](screengrabs/kstreams_app.png)
 
@@ -54,29 +54,25 @@ Sample running product total messages:
 
 ```shell
 # optional - set java version (v17 is latest compatible)
-JAVA_HOME=~/Library/Java/JavaVirtualMachines/corretto-17.0.3/Contents/Home/
+JAVA_HOME=~/Library/Java/JavaVirtualMachines/openjdk-17.0.2/Contents/Home
 
 # compile to uber jar
 ./gradlew clean shadowJar
 
 # run the streaming application
-java -jar build/libs/kstreams-kafka-demo-1.0.0-all.jar
+$JAVA_HOME/bin/java -jar build/libs/kstreams-kafka-demo-1.0.0-all.jar
 ```
 
-## Docker Stack
-
-Demonstration uses Kafka/Flink [Docker Swarm Stack](https://github.com/garystafford/streaming-sales-generator/blob/main/docker-compose.yml) from 'Sales Data Generator' project.
-  
-See [bitnami/kafka](https://hub.docker.com/r/bitnami/kafka) on Docker Hub for more information about running Kafka
-locally using Docker.
+## Build Custom Java Container
 
 ```shell
-# optional: delete previous stack
-docker stack rm kafka-flink
+export TAG=0.4.0
+docker build \
+  --no-cache \
+  -f docker/Dockerfile \
+  -t garystafford/kstreams-kafka-demo:${TAG} .
 
-# deploy kafka stack
-docker swarm init
-docker stack deploy kafka-flink --compose-file docker-compose.yml
+docker push garystafford/kstreams-kafka-demo:${TAG}
 ```
 
 ## Kafka
@@ -84,11 +80,17 @@ docker stack deploy kafka-flink --compose-file docker-compose.yml
 Helpful Kafka commands.
 
 ```shell
-docker exec -it $(docker container ls --filter  name=kafka-flink_kafka --format "{{.ID}}") bash
+docker exec -it $(docker container ls --filter  name=streaming-stack_kafka --format "{{.ID}}") bash
 
 export BOOTSTRAP_SERVERS="localhost:9092"
 export INPUT_TOPIC="demo.purchases"
-export OUTPUT_TOPIC="demo.totals"
+export OUTPUT_TOPIC="demo.running.totals"
+
+# reset kstreams state
+kafka-streams-application-reset.sh \
+  --application-id kstreams-demo-app \
+  --input-topics INPUT_TOPIC \
+  --bootstrap-servers $BOOTSTRAP_SERVERS \
 
 # list all topics
 kafka-topics.sh --list \
