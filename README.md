@@ -75,12 +75,19 @@ docker build \
 docker push garystafford/kstreams-kafka-demo:${TAG}
 ```
 
+## Review Output from KStreams App Container
+
+```shell
+KSTREAMS_CONTAINER=$(docker container ls --filter  name=streaming-stack_kstreams.1 --format "{{.ID}}")
+docker logs ${KSTREAMS_CONTAINER} --follow
+```
+
 ## Kafka
 
 Helpful Kafka commands.
 
 ```shell
-docker exec -it $(docker container ls --filter  name=streaming-stack_kafka --format "{{.ID}}") bash
+docker exec -it $(docker container ls --filter  name=streaming-stack_kafka.1 --format "{{.ID}}") bash
 
 export BOOTSTRAP_SERVERS="localhost:9092"
 export INPUT_TOPIC="demo.purchases"
