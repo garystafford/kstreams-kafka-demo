@@ -66,7 +66,7 @@ $JAVA_HOME/bin/java -jar build/libs/kstreams-kafka-demo-1.0.0-all.jar
 ## Build Custom Java Container
 
 ```shell
-export TAG=0.4.0
+export TAG=0.1.0
 docker build \
   --no-cache \
   -f docker/Dockerfile \
