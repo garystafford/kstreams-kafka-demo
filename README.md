@@ -87,7 +87,8 @@ docker logs ${KSTREAMS_CONTAINER} --follow
 Helpful Kafka commands.
 
 ```shell
-docker exec -it $(docker container ls --filter  name=streaming-stack_kafka.1 --format "{{.ID}}") bash
+KAFKA_CONTAINER=$(docker container ls --filter  name=streaming-stack_kafka.1 --format "{{.ID}}")
+docker exec -it ${KAFKA_CONTAINER} bash
 
 export BOOTSTRAP_SERVERS="localhost:9092"
 export INPUT_TOPIC="demo.purchases"

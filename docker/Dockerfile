@@ -2,10 +2,6 @@
 
 FROM openjdk:17-jdk
 
-COPY build/libs/kstreams-kafka-demo-1.0.0-all.jar /tmp/kstreams-kafka-demo-1.0.0-all.jar
+COPY build/libs/kstreams-kafka-demo-1.0.0-all.jar /tmp/kstreams-app.jar
 
-#ENTRYPOINT ["tail", "-f", "/dev/null"]
-
-CMD ["java", "-jar", "/tmp/kstreams-kafka-demo-1.0.0-all.jar"]
-
-
+CMD ["java", "-jar", "/tmp/kstreams-app"]
