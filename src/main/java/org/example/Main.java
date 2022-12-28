@@ -4,7 +4,7 @@ package org.example;
 //          aggregates product transactions, quantities, and sales on data stream,
 //          and writes results to a second Kafka topic.
 // Author:  Gary A. Stafford
-// Date: 2022-09-07
+// Date: 2022-12-28
 
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.common.serialization.Serdes;
@@ -20,33 +20,45 @@ import org.example.model.Purchase;
 import org.example.model.Total;
 import org.example.serializer.CustomSerdes;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
 public class Main {
-    // assumes PLAINTEXT authentication
-    final static String BOOTSTRAP_SERVERS = "kafka:29092";
-    final static String APPLICATION_ID = "kstreams-kafka-demo";
-    final static String INPUT_TOPIC = "demo.purchases";
-    final static String OUTPUT_TOPIC = "demo.running.totals";
 
     public static void main(String[] args) {
-        kStreamPipeline();
+        Properties props = getProperties();
+
+        kStreamPipeline(props);
     }
 
-    private static void kStreamPipeline() {
+    private static Properties getProperties() {
+        Properties props = new Properties();
+
+        try (InputStream propsInput =
+                     Main.class.getClassLoader().getResourceAsStream("config.properties")) {
+            props.load(propsInput);
+            return props;
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return props;
+    }
+
+    private static void kStreamPipeline(Properties props) {
         System.out.println("Starting...");
 
-        Properties props = new Properties();
-        props.put(StreamsConfig.APPLICATION_ID_CONFIG, APPLICATION_ID);
-        props.put(StreamsConfig.BOOTSTRAP_SERVERS_CONFIG, BOOTSTRAP_SERVERS);
-        props.put(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, "earliest");
-        props.put(StreamsConfig.COMMIT_INTERVAL_MS_CONFIG, 10); // Used to speed up publishing of messages for demo
+        Properties kafkaStreamsProps = new Properties();
+        kafkaStreamsProps.put(StreamsConfig.APPLICATION_ID_CONFIG, props.getProperty("APPLICATION_ID"));
+        kafkaStreamsProps.put(StreamsConfig.BOOTSTRAP_SERVERS_CONFIG, props.getProperty("BOOTSTRAP_SERVERS"));
+        kafkaStreamsProps.put(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, props.getProperty("AUTO_OFFSET_RESET_CONFIG"));
+        kafkaStreamsProps.put(StreamsConfig.COMMIT_INTERVAL_MS_CONFIG, props.getProperty("COMMIT_INTERVAL_MS_CONFIG"));
 
         StreamsBuilder builder = new StreamsBuilder();
         builder
-                .stream(INPUT_TOPIC, Consumed.with(Serdes.Void(), CustomSerdes.Purchase()))
+                .stream(props.getProperty("INPUT_TOPIC"), Consumed.with(Serdes.Void(), CustomSerdes.Purchase()))
                 .peek((unused, purchase) -> System.out.println(purchase.toString()))
                 .flatMap((KeyValueMapper<Void, Purchase, Iterable<KeyValue<String, Total>>>) (unused, purchase) -> {
                     List<KeyValue<String, Total>> result = new ArrayList<>();
@@ -69,12 +81,12 @@ public class Main {
                 })
                 .toStream()
                 .peek((productId, total) -> System.out.println(total.toString()))
-                .to(OUTPUT_TOPIC, Produced.with(Serdes.String(), CustomSerdes.Total()));
+                .to(props.getProperty("OUTPUT_TOPIC"), Produced.with(Serdes.String(), CustomSerdes.Total()));
 
         //  Topology topology = builder.build();
         // System.out.printf("---> %s%n", topology.describe().toString());
 
-        KafkaStreams streams = new KafkaStreams(builder.build(), props);
+        KafkaStreams streams = new KafkaStreams(builder.build(), kafkaStreamsProps);
         streams.start();
         System.out.println("Running...");
     }

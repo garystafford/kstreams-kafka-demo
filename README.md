@@ -7,7 +7,7 @@ using the [Streaming Synthetic Sales Data Generator](https://github.com/garystaf
   Kafka/Flink [Docker Swarm Stack](https://github.com/garystafford/streaming-sales-generator/blob/main/docker-compose.yml)
   from 'Sales Data Generator' project
 
-* Uber JAR built with Gradle using OpenJDK version 17 (openjdk version "17.0.2" 2022-01-18)
+* Uber JAR built with Gradle using OpenJDK version 17 (openjdk version "17.0.5" 2022-10-18 LTS) < Corretto-17.0.5.8.1
 
 ![KStreams App](screengrabs/kstreams_app.png)
 
@@ -54,19 +54,21 @@ Sample running product total messages:
 
 ```shell
 # optional - set java version (v17 is latest compatible)
-JAVA_HOME=~/Library/Java/JavaVirtualMachines/openjdk-17.0.2/Contents/Home
+# OpenJDK Docker image is now officially deprecated.
+JAVA_HOME=~/Library/Java/JavaVirtualMachines/corretto-17.0.5/Contents/Home
+$JAVA_HOME/bin/java -version
 
 # compile to uber jar
 ./gradlew clean shadowJar
 
 # run the streaming application
-$JAVA_HOME/bin/java -jar build/libs/kstreams-kafka-demo-1.0.0-all.jar
+$JAVA_HOME/bin/java -jar build/libs/kstreams-kafka-demo-1.1.0-all.jar
 ```
 
 ## Build Custom Java Container
 
 ```shell
-export TAG=0.1.0
+export TAG=1.0.0
 docker build \
   --no-cache \
   -f docker/Dockerfile \

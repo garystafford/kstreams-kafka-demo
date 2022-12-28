@@ -1,7 +1,8 @@
-# Gary A. Stafford (2022-09-19)
+# Gary A. Stafford (2022-12-28)
+# does not work with alpine version of base image...
 
-FROM openjdk:17-jdk
+FROM amazoncorretto:17.0.5
 
-COPY build/libs/kstreams-kafka-demo-1.0.0-all.jar /tmp/kstreams-app.jar
+COPY build/libs/kstreams-kafka-demo-1.1.0-all.jar /tmp/kstreams-app.jar
 
-CMD ["java", "-jar", "/tmp/kstreams-app"]
+CMD ["java", "-jar", "/tmp/kstreams-app.jar"]
